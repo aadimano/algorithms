@@ -1,0 +1,37 @@
+/*********************************************************************************
+
+                   Multi-Stage Graphs ------Using Dynamic Programming.....
+**********************************************************************************/
+// d[i] represents the minimum vertex to be choosen for achieving shortest path...
+// graph[i][j] represnts the graph with i vertices and i,j being the edge from i to j.
+//path[i] represents the shorest path from start to sink through the intermediate vertices
+#include <stdio.h>
+#include<math.h>
+int main()
+{
+  int no_of_nodes,i_out_loop,k_in_loop,min=0;
+  scanf("%d",&no_of_nodes);
+  int cost[no_of_nodes],path[no_of_nodes/2],graph[no_of_nodes][no_of_nodes],d[no_of_nodes-1];
+  for(i_out_loop=0;i_out_loop<no_of_nodes;i_out_loop++)
+   for(k_in_loop=0;k_in_loop<no_of_nodes;k_in_loop++)
+    scanf("%d",&graph[i_out_loop][k_in_loop]);
+ cost[no_of_nodes-1]=0;
+  for(i_out_loop=no_of_nodes-1;i_out_loop<no_of_nodes-1;i_out_loop++){
+   for(k_in_loop=i_out_loop+1;k_in_loop<no_of_nodes-1;k_in_loop++)
+    {
+        min=32655;
+        if(graph[i_out_loop][k_in_loop]!=0 && cost[k_in_loop]+graph[i_out_loop][k_in_loop]<min){
+          min=cost[k_in_loop]+graph[i_out_loop][k_in_loop];
+          d[i_out_loop]=k_in_loop;
+         }
+    cost[i_out_loop]=min;
+   }
+  }
+ path[0]=0;path[no_of_nodes/2-1]=no_of_nodes-1;
+ for(i_out_loop=1;i_out_loop<no_of_nodes/2-1;i_out_loop++)
+   path[i_out_loop]=d[i_out_loop-1];
+ for(i_out_loop=0;i_out_loop<no_of_nodes;i_out_loop++)
+   printf("%d-",path[i_out_loop]);
+   
+ return 0;
+} 
